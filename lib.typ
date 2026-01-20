@@ -1,7 +1,7 @@
-
 // All imports
 #import "@preview/theoretic:0.1.1" as theoretic: theorem, proof, qed
 #import "@preview/showybox:2.0.4": showybox
+#import "@preview/fontawesome:0.6.0": *
 
 // Main noteworthy function
 #let noteworthy(
@@ -10,7 +10,8 @@
   language: "EN",
   title: none,
   author: none,
-  contact-details: none,
+  contact-link: none,
+  contact-show: none,
   toc-title: "Table of Contents",
   watermark: none,
   content,
@@ -26,7 +27,7 @@
   set page(
     paper: paper-size,
     background: if watermark != none {
-      rotate(-40deg, text(30pt, fill: rgb("FFCBC4"))[*#watermark*])
+      rotate(-40deg, text(30pt, fill: rgb("#f8905862"))[*#watermark*])
     },
     header: context {
       if (counter(page).get().at(0) > 1) [
@@ -44,8 +45,8 @@
         columns: (1fr, 1fr, 1fr),
         align: (left, center, right),
         author,
-        if contact-details != none {
-          [#sym.diamond.filled #link(contact-details) #sym.diamond.filled]
+        if contact-link != none {
+          [#fa-icon("envelope", solid: true) #link(contact-link)[#contact-show] #fa-icon("envelope", solid: true)]
         },
         counter(page).display(
           "(1/1)",
