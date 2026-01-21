@@ -12,6 +12,7 @@
   font: "IBM Plex Mono",
   language: "EN",
   title: none,
+  header-title: none,
   author: none,
   contact-link: none,
   contact-show: none,
@@ -38,7 +39,12 @@
         #grid(
           columns: (1fr, 1fr),
           align: (left, right),
-          smallcaps(title), datetime.today().display("[day]/[month]/[year]"),
+          smallcaps(if header-title != none {
+            header-title
+          } else {
+            title
+          }),
+          datetime.today().display("[day]/[month]/[year]"),
         )
         #line(length: 100%)
       ]
