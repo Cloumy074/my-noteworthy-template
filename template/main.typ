@@ -12,7 +12,7 @@
   contact-show: "Show Text", // What you want to show as link text
   toc-title: "Table of Contents",
   watermark: "DRAFT", // Optional: Watermark for the document
-  pagebreak: false,  // Optional: Add a page break after the table of contents
+  page-break: false,  // Optional: Add a page break after the table of contents
 )
 
 // Write here

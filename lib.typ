@@ -20,7 +20,7 @@
   toc-title: "Table of Contents",
   watermark: none,
   content,
-  pagebreak: false,
+  page-break: false,
 ) = {
   // Document metadata
   set document(
@@ -114,7 +114,7 @@
     ),
   )
 
-  if pagebreak == true [ pagebreak() ]
+  if page-break == true [ #pagebreak() ]
 
   // Main content
   content
