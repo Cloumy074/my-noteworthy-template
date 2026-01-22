@@ -1,12 +1,15 @@
 // All imports
-#import "@preview/theoretic:0.1.1" as theoretic: theorem, proof, qed
+#import "@preview/theoretic:0.3.0"
+#import theoretic.presets.bar: * 
+#show ref: theoretic.show-ref
+
 #import "@preview/showybox:2.0.4": showybox
 #import "@preview/fontawesome:0.6.0": *
 
 // Main noteworthy function
 #let noteworthy(
-  paper-size: "a4",
-  font: "New Computer Modern",
+  paper-size: "us-letter",
+  font: "IBM Plex Mono",
   language: "EN",
   title: none,
   author: none,
@@ -15,6 +18,7 @@
   toc-title: "Table of Contents",
   watermark: none,
   content,
+  pagebreak: false,
 ) = {
   // Document metadata
   set document(
@@ -42,11 +46,11 @@
     footer: context [
       #line(length: 100%)
       #grid(
-        columns: (1fr, 1fr, 1fr),
+        columns: (1fr, auto, 1fr),
         align: (left, center, right),
         author,
         if contact-link != none {
-          [#fa-icon("envelope", solid: true) #link(contact-link)[#contact-show] #fa-icon("envelope", solid: true)]
+          [#fa-icon("box-archive") #link(contact-link)[#contact-show] #fa-icon("box-archive")]
         },
         counter(page).display(
           "(1/1)",
@@ -99,72 +103,35 @@
     ),
   )
 
+  if pagebreak == true [ pagebreak() ]
+
   // Main content
   content
 }
 
 // Custom environments using theoretic
 
-// 1. Definition
-#let definition = theorem.with(
-  kind: "definition",
-  supplement: "Definition",
-  fmt-prefix: (s, n, t) => {
-    text(weight: "bold", stretch: 85%)[#s #n]
-    if t != none [ (#t)]
-    h(1em)
-  },
-)
-
-// 2. Example
-#let example = theorem.with(
-  kind: "example",
-  supplement: "Example",
-  fmt-prefix: (s, n, t) => {
-    text(weight: "bold", stretch: 85%)[#s #n]
-    if t != none [ (#t)]
-    h(1em)
-  },
-)
-
-// 3. Theorem
-#let theorem = theorem.with(
-  fmt-prefix: (s, n, t) => {
-    text(weight: "bold", stretch: 85%)[#s #n]
-    if t != none [ (#t)]
-    h(1em)
-  },
-)
-
-// 4. Note
-#let note = theorem.with(
+// 1. Note
+#let note = remark.with(
   kind: "note",
   supplement: "Note",
-  fmt-prefix: (s, n, t) => {
-    text(weight: "bold", stretch: 85%)[#s #n]
-    if t != none [ (#t)]
-    h(1em)
-  },
+  options: (color: rgb("#f88f58")),
 )
 
-// 5. Exercise
+// 2. Exercise
 #let exercise = theorem.with(
   kind: "exercise",
   supplement: "Exercise",
-  fmt-prefix: (s, n, t) => {
-    text(weight: "bold", stretch: 85%)[#s #n]
-    if t != none [ (#t)]
-    h(1em)
-  },
+  options: (color: rgb("#56727b")),
 )
 
-// 6. Solution
-#let solution = theorem.with(
+// 3. Solution
+#let solution = proof.with(
   kind: "solution",
   supplement: "Solution",
-  fmt-prefix: (s, n, t) => {
-    text(weight: "bold")[#s:]
-    if t != none [ (#t)]
-    h(1em)
-  },
+  suffix: $#fa-icon("terminal")$
+)
+
+#let proof = proof.with(
+  suffix: $#fa-icon("square", solid: true)$
 )
